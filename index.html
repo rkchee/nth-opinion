@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+   
+    <title>yjs-element</title>
+  </head>
+  <body>
+    <script src="node_modules/yjs/dist/y.js"></script>
+    <script src="node_modules/y-array/dist/y-array.js"></script>    
+    <script src="node_modules/y-map/dist/y-map.js"></script>    
+    <script src="node_modules/y-memory/dist/y-memory.js"></script>
+    <script src="node_modules/y-text/dist/y-text.js"></script>    
+    <script src="node_modules/y-webrtc/dist/y-webrtc.js"></script>
+    <script type="module" src="build/js/main.min.js"></script>
+    <script>
+      // HACK(keanulee): The Redux package assumes `process` exists - mock it here before
+      // the module is loaded.
+      window.process = {
+        env: {
+          NODE_ENV: 'production'
+        }
+      };
+    </script>
+    <script>
+      Y({
+        db: {
+          name: 'memory'           },
+          connector: {
+            name: 'webrtc',
+            room: 'my-room'
+          },
+        share: {
+          textarea: 'Text' 
+        }
+      }).then(function (y) {
+        y.share.textarea.bind(document.getElementById('textarea'))
+      })
+    </script>
+
+    <style type="text/css">
+      textarea {
+        text-align: center;
+      }
+    </style>
+    <textarea id="textarea"></textarea>
+
+  
+
+  </body>
+</html>
